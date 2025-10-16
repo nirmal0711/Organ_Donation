@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_screen"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    tools:context=".activities.DonorFormActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- 🌈 HEADER -->
+        <LinearLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="24dp"
+            android:background="@drawable/bg_header_glass"
+            android:elevation="8dp">
+
+            <!-- 👤 Icon -->
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_user"
+                android:background="@drawable/bg_white_glass_circle"
+                android:padding="12dp"
+                android:elevation="4dp"
+                android:layout_marginEnd="16dp" />
+
+            <!-- 🩵 Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Donor Registration"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/white"
+                android:shadowColor="#40000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="6" />
+        </LinearLayout>
+
+        <!-- 🖼️ PROFILE SECTION (separate from header) -->
+        <LinearLayout
+            android:id="@+id/layoutProfileImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:id="@+id/imgProfilePreview"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_user"
+                android:background="@drawable/bg_white_glass_circle"
+                android:padding="10dp"
+                android:elevation="8dp" />
+
+            <Button
+                android:id="@+id/btnUploadImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Photo"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_glass_gradient"
+                android:fontFamily="sans-serif-medium"
+                android:textAllCaps="false"
+                android:elevation="4dp"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+
+        <!-- 🩺 FORM CARD -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="12dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/primary_blue">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- ✍️ Full Name -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Full Name"
+                    app:startIconDrawable="@drawable/ic_user"
+                    app:boxStrokeColor="@color/primary_blue">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etFullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🎂 Age -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Age"
+                    app:startIconDrawable="@drawable/ic_cake"
+                    app:boxStrokeColor="@color/primary_blue"
+                    android:layout_marginTop="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🚻 Gender -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_dark_blue"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_glass_spinner"
+                    android:padding="12dp"
+                    android:popupBackground="@drawable/bg_popup_dark"
+                    android:entries="@array/gender_options" />
+
+                <!-- 🩸 Blood Group -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blood Group"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_dark_blue"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerBloodGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_glass_spinner"
+                    android:padding="12dp"
+                    android:popupBackground="@drawable/bg_popup_dark"
+                    android:entries="@array/blood_groups" />
+
+                <!-- 📍 Address -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    app:startIconDrawable="@drawable/ic_location"
+                    app:boxStrokeColor="@color/primary_blue"
+                    android:layout_marginTop="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- ☎️ Contact -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    app:startIconDrawable="@drawable/ic_phone"
+                    app:boxStrokeColor="@color/primary_blue"
+                    android:layout_marginTop="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🧑‍⚕️ Emergency Contact -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Emergency Contact"
+                    app:startIconDrawable="@drawable/ic_emergency"
+                    app:boxStrokeColor="@color/primary_blue"
+                    android:layout_marginTop="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmergencyContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🫀 Organs Grid -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Organs to Donate"
+                    android:textColor="@color/primary_dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp" />
+
+                <GridLayout
+                    android:id="@+id/gridOrgans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:alignmentMode="alignMargins"
+                    android:layout_marginTop="8dp">
+
+                    <CheckBox android:text="Heart" android:textColor="@color/text_secondary" />
+                    <CheckBox android:text="Kidneys" android:textColor="@color/text_secondary" />
+                    <CheckBox android:text="Liver" android:textColor="@color/text_secondary" />
+                    <CheckBox android:text="Lungs" android:textColor="@color/text_secondary" />
+                    <CheckBox android:text="Pancreas" android:textColor="@color/text_secondary" />
+                    <CheckBox android:text="Intestines" android:textColor="@color/text_secondary" />
+                    <CheckBox android:text="Corneas" android:textColor="@color/text_secondary" />
+                    <CheckBox android:text="Skin" android:textColor="@color/text_secondary" />
+                    <CheckBox android:text="Bones" android:textColor="@color/text_secondary" />
+                    <CheckBox android:text="Tissues" android:textColor="@color/text_secondary" />
+                </GridLayout>
+
+                <!-- 💊 Health Conditions -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Health Conditions (optional)"
+                    app:startIconDrawable="@drawable/ic_health"
+                    app:boxStrokeColor="@color/primary_blue"
+                    android:layout_marginTop="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etHealthConditions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minLines="2"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🔘 Availability -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Available for Donation"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_dark_blue"
+                        android:textSize="16sp" />
+
+                    <Switch
+                        android:id="@+id/switchAvailability"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOn="Active"
+                        android:textOff="Inactive"
+                        android:checked="true"
+                        android:thumbTint="@color/primary_dark_blue"
+                        android:trackTint="@color/primary_light_blue" />
+                </LinearLayout>
+
+                <!-- 🚀 Submit -->
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:fontFamily="sans-serif-medium"
+                    android:background="@drawable/btn_glass_gradient"
+                    android:elevation="6dp"
+                    android:layout_marginTop="28dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

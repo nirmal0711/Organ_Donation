@@ -1,0 +1,70 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 🌙 Base Material 3 App Theme -->
+    <style name="Theme.Organ_Donation" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Primary Colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/primary_light_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+
+        <!-- Text and Font -->
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+
+        <!-- Optional: Material TextInput defaults -->
+        <item name="textInputStyle">@style/BlueHintTextInput</item>
+    </style>
+
+
+    <!-- 🩵 TextInputLayout style -->
+    <style name="BlueHintTextInput" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="startIconTint">@color/primary</item>
+        <item name="endIconTint">@color/primary</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="hintTextAppearance">@style/BlueHintAppearance</item>
+    </style>
+
+    <!-- Hint label color -->
+    <style name="BlueHintAppearance" parent="@style/TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <!-- 🧾 Outlined Input (basic EditText) -->
+    <style name="OutlinedInputStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/bg_input_outline</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+
+    </style>
+
+    <!-- 🩸 Spinner / Dropdown -->
+    <style name="DropdownStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">@drawable/bg_input_outline</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- 💳 Dashboard Cards -->
+    <style name="DashboardCardStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <!-- ✅ Use unprefixed attributes here -->
+        <item name="cardCornerRadius">14dp</item>
+        <item name="cardElevation">6dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
+</resources>

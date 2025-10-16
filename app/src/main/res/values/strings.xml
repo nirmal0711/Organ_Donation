@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Organ_Donation</string>
+    <string-array name="user_roles">
+        <item>Donor</item>
+        <item>Patient</item>
+        <item>Hospital</item>
+        <item>Admin</item>
+    </string-array>
+
+</resources>

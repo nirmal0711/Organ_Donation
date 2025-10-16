@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 🌈 Main App Theme -->
+    <style name="Theme.OrganDonationApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorSecondary">@color/primary_light_blue</item>
+        <item name="colorPrimaryContainer">@color/primary_dark_blue</item>
+        <item name="android:statusBarColor">@color/primary_dark_blue</item>
+        <item name="android:navigationBarColor">@color/background_lightblue</item>
+        <item name="android:windowBackground">@color/background_lightblue</item>
+
+        <!-- Text + icon tint defaults -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- 🖤 Dark Dropdown Spinner Theme -->
+    <style name="DarkSpinnerTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:popupBackground">#1C1C1C</item>
+    </style>
+
+    <style name="AdminStatCard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@drawable/bg_white_glass_circle</item>
+    </style>
+
+    <style name="AdminStatTitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AdminStatValue">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AdminActionCard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">110dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:background">@drawable/bg_white_glass_circle</item>
+    </style>
+
+    <style name="AdminActionIcon">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:tint">@android:color/white</item>
+    </style>
+
+    <style name="AdminActionText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <!-- ✨ Gradient Button Style (optional, for reuse) -->
+    <style name="Widget.Button.Gradient" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/btn_gradient</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- 🪶 TextInput Layout Default Outline -->
+    <style name="Widget.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primary_blue</item>
+        <item name="hintTextColor">@color/primary_blue</item>
+    </style>
+
+</resources>
