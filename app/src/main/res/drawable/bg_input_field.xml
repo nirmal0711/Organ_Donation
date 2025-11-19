@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 🩵 Background color (semi-transparent white) -->
+    <solid android:color="#33FFFFFF" />
+
+    <!-- 🔲 Rounded corners -->
+    <corners android:radius="12dp" />
+
+    <!-- 🔹 Soft border -->
+    <stroke
+        android:width="1.5dp"
+        android:color="#66FFFFFF" />
+
+    <!-- ✨ Inner padding (optional if you want extra breathing space) -->
+    <padding
+        android:left="10dp"
+        android:top="8dp"
+        android:right="10dp"
+        android:bottom="8dp" />
+
+</shape>

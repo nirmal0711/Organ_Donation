@@ -1,0 +1,51 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Background Circle -->
+    <path
+        android:fillColor="#33FFFFFF"
+        android:pathData="M100,10A90,90 0 1,1 99.9,10z" />
+
+    <!-- Folder Shape -->
+    <path
+        android:fillColor="#FF9E80"
+        android:pathData="M40,70h120a8,8 0 0,1 8,8v60a8,8 0 0,1 -8,8H40a8,8 0 0,1 -8,-8V78a8,8 0 0,1 8,-8z" />
+
+    <!-- Top tab -->
+    <path
+        android:fillColor="#FF7043"
+        android:pathData="M40,70l20,-25h40l20,25z" />
+
+    <!-- Paper Sheets -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M55,85h90v45h-90z" />
+
+    <!-- Dashes on Paper -->
+    <path
+        android:strokeColor="#BDBDBD"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M65,95h70M65,110h50M65,125h60" />
+
+    <!-- Sad Face Icon -->
+    <path
+        android:strokeColor="#757575"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M100,155m-10,0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0" />
+    <path
+        android:strokeColor="#757575"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M90,150a10,6 0 0,1 20,0" />
+
+    <!-- Text-like lines -->
+    <path
+        android:strokeColor="#9E9E9E"
+        android:strokeWidth="2"
+        android:pathData="M60,180h80" />
+</vector>

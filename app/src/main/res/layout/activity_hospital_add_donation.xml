@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_screen"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    tools:context=".activities.HospitalAddDonationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- 🌈 HEADER -->
+        <LinearLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="24dp"
+            android:background="@drawable/bg_header_glass"
+            android:elevation="8dp">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_hospital"
+                android:background="@drawable/bg_white_glass_circle"
+                android:padding="12dp"
+                android:elevation="4dp"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Organ Donation"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/white"
+                android:shadowColor="#40000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="6" />
+        </LinearLayout>
+
+        <!-- 🩺 FORM CARD -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="12dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/primary_blue">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- 🫀 Organ Type -->
+                <TextView
+                    android:id="@+id/etOrganType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Organ Type"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_dark_blue"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerOrganType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_glass_spinner"
+                    android:padding="12dp"
+                    android:popupBackground="@drawable/bg_popup_dark"
+                    android:entries="@array/organ_types" />
+
+                <!-- 🩸 Blood Group -->
+                <TextView
+                    android:id="@+id/etBloodGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blood Group"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_dark_blue"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerBloodGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_glass_spinner"
+                    android:padding="12dp"
+                    android:popupBackground="@drawable/bg_popup_dark"
+                    android:entries="@array/blood_groups" />
+
+                <!-- 👤 Donor Name -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Donor Name (optional)"
+                    app:startIconDrawable="@drawable/ic_user"
+                    app:boxStrokeColor="@color/primary_blue"
+                    android:layout_marginTop="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDonorName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🗒️ Additional Notes -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Additional Notes"
+                    app:startIconDrawable="@drawable/ic_notes"
+                    app:boxStrokeColor="@color/primary_blue"
+                    android:layout_marginTop="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🧬 Status Switch -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Donation Status"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_dark_blue"
+                        android:textSize="16sp" />
+
+                    <Switch
+                        android:id="@+id/switchStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOn="Available"
+                        android:textOff="Unavailable"
+                        android:checked="true"
+                        android:thumbTint="@color/primary_dark_blue"
+                        android:trackTint="@color/primary_light_blue" />
+                </LinearLayout>
+
+                <!-- 🚀 Submit -->
+                <Button
+                    android:id="@+id/btnSubmitDonation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Donation"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:fontFamily="sans-serif-medium"
+                    android:background="@drawable/btn_glass_gradient"
+                    android:elevation="6dp"
+                    android:layout_marginTop="28dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

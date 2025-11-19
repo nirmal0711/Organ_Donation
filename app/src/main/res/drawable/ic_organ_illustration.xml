@@ -1,0 +1,26 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Soft pink circular background -->
+    <path
+        android:fillColor="#FFF2F5"
+        android:pathData="M100,0A100,100 0,1,1 99.9,0z" />
+
+    <!-- Hands -->
+    <path
+        android:fillColor="#FFD5C2"
+        android:pathData="M40,130c10,15 30,25 60,25s50,-10 60,-25c3,-4 0,-10 -5,-10H45C40,120 37,126 40,130z" />
+
+    <!-- Heart shape -->
+    <path
+        android:fillColor="#FF5C5C"
+        android:pathData="M100,60c-10,-15 -35,-15 -45,0 -10,15 -5,40 45,70 50,-30 55,-55 45,-70 -10,-15 -35,-15 -45,0z" />
+
+    <!-- Medical cross -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M95,70h10v10h10v10h-10v10h-10v-10h-10v-10h10z" />
+</vector>

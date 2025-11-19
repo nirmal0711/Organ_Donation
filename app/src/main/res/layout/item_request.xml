@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="150dp"
+    android:maxHeight="250dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    android:backgroundTint="@android:color/white"
+    android:layout_gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:minHeight="150dp"
+        android:baselineAligned="false">
+
+        <TextView
+            android:id="@+id/tvPatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Patient: John Doe"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_blue"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvOrgan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Organ Needed: Kidney"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="2dp" />
+
+        <TextView
+            android:id="@+id/tvHospital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hospital: CityCare"
+            android:textSize="13sp"
+            android:textColor="@color/dark_gray"
+            android:layout_marginBottom="2dp" />
+
+        <TextView
+            android:id="@+id/tvUrgency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Urgency: High"
+            android:textSize="13sp"
+            android:textColor="@color/red"
+            android:textStyle="italic"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Buttons Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="4dp">
+
+            <Button
+                android:id="@+id/btnAccept"
+                android:layout_width="100dp"
+                android:layout_height="38dp"
+                android:text="Accept"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/primary_blue"
+                android:layout_marginEnd="8dp"
+                android:elevation="4dp" />
+
+            <Button
+                android:id="@+id/btnDecline"
+                android:layout_width="100dp"
+                android:layout_height="38dp"
+                android:text="Decline"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red"
+                android:elevation="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

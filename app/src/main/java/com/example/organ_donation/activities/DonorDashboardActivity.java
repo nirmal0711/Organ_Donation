@@ -1,15 +1,25 @@
 package com.example.organ_donation.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.*;
+
 import com.bumptech.glide.Glide;
 import com.example.organ_donation.R;
+import com.example.organ_donation.adapters.AvailableDonationAdapter;
+import com.example.organ_donation.models.DonationModel;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DonorDashboardActivity extends AppCompatActivity {
 
@@ -22,107 +32,133 @@ public class DonorDashboardActivity extends AppCompatActivity {
     private MaterialCardView cardMyDonation, cardViewRequests, cardEditProfile;
     private Button btnLogout;
 
+    // Available Donations Section
+    private RecyclerView rvAvailableDonations;
+    private AvailableDonationAdapter donationAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_dashboard);
 
-        // 🔹 Firebase setup
+        // Firebase
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // 🔹 UI references
+        initViews();
+        setupAvailableDonationsRecyclerView();
+        loadDonorProfile();
+        loadAvailableDonations(); // Real-time list
+        setupClickListeners();
+    }
+
+    private void initViews() {
         tvWelcome = findViewById(R.id.tvWelcome);
         tvName = findViewById(R.id.tvName);
         tvEmail = findViewById(R.id.tvEmail);
         tvBloodGroup = findViewById(R.id.tvBloodGroup);
         switchStatus = findViewById(R.id.switchStatus);
+        imgProfile = findViewById(R.id.imgProfile);
+
         cardMyDonation = findViewById(R.id.cardMyDonation);
         cardViewRequests = findViewById(R.id.cardViewRequests);
         cardEditProfile = findViewById(R.id.cardEditProfile);
         btnLogout = findViewById(R.id.btnLogout);
-        imgProfile = findViewById(R.id.imgProfile);
 
-        // 🔹 Load donor data
-        if (auth.getCurrentUser() != null) {
-            String uid = auth.getCurrentUser().getUid();
-            loadDonorData(uid);
-        }
-
-        // 🔹 Navigation
-        cardEditProfile.setOnClickListener(v ->
-                startActivity(new Intent(this, DonorFormActivity.class)));
-
-        cardMyDonation.setOnClickListener(v ->
-                Toast.makeText(this, "Coming soon: Donation Info", Toast.LENGTH_SHORT).show());
-
-        cardViewRequests.setOnClickListener(v ->
-                Toast.makeText(this, "Coming soon: View Requests", Toast.LENGTH_SHORT).show());
-
-        btnLogout.setOnClickListener(v -> {
-            auth.signOut();
-            finish();
-        });
-
-        // 🔹 Update availability in Firestore when toggled
-        switchStatus.setOnCheckedChangeListener((buttonView, isChecked) -> updateAvailability(isChecked));
+        rvAvailableDonations = findViewById(R.id.rvAvailableDonations);
     }
 
-    private void loadDonorData(String uid) {
+    private void setupAvailableDonationsRecyclerView() {
+        rvAvailableDonations.setLayoutManager(new LinearLayoutManager(this));
+        donationAdapter = new AvailableDonationAdapter(this);
+        rvAvailableDonations.setAdapter(donationAdapter);
+    }
+
+    private void loadDonorProfile() {
+        if (auth.getCurrentUser() == null) return;
+
+        String uid = auth.getCurrentUser().getUid();
+
         db.collection("Donors").document(uid)
-                .get()
-                .addOnSuccessListener(this::updateUI)
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Error loading profile: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addSnapshotListener((doc, error) -> {
+                    if (error != null) {
+                        Toast.makeText(this, "Profile load failed", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (doc != null && doc.exists()) {
+                        updateProfileUI(doc);
+                    } else {
+                        Toast.makeText(this, "Complete your profile first", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(this, DonorFormActivity.class));
+                        finish();
+                    }
+                });
     }
 
-    private void updateUI(DocumentSnapshot doc) {
-        if (!doc.exists()) {
-            // 🚨 No profile yet → redirect to form
-            startActivity(new Intent(this, DonorFormActivity.class));
-            Toast.makeText(this, "Please complete your Donor Profile first.", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
+    private void updateProfileUI(DocumentSnapshot doc) {
         String fullName = doc.getString("fullName");
         String bloodGroup = doc.getString("bloodGroup");
         Boolean available = doc.getBoolean("available");
         String imageUrl = doc.getString("profileImage");
 
-        // 🧠 Set text safely
-        tvWelcome.setText(fullName != null ? "Welcome, " + fullName : "Welcome, Donor");
-        tvName.setText(fullName != null ? "Name: " + fullName : "Name: -");
-        tvEmail.setText("Email: " + (auth.getCurrentUser() != null ? auth.getCurrentUser().getEmail() : "-"));
+        tvWelcome.setText("Welcome, " + (fullName != null ? fullName : "Donor"));
+        tvName.setText("Name: " + (fullName != null ? fullName : "-"));
+        tvEmail.setText("Email: " + auth.getCurrentUser().getEmail());
         tvBloodGroup.setText("Blood Group: " + (bloodGroup != null ? bloodGroup : "-"));
-
         switchStatus.setChecked(available != null && available);
 
-        // 🖼️ Load profile image (or fallback)
         if (imageUrl != null && !imageUrl.isEmpty()) {
-            Glide.with(this)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.ic_user)
-                    .error(R.drawable.ic_user)
-                    .circleCrop()
-                    .into(imgProfile);
-        } else {
-            imgProfile.setImageResource(R.drawable.ic_user);
+            Glide.with(this).load(imageUrl).circleCrop().into(imgProfile);
         }
+
+        // Availability toggle
+        switchStatus.setOnCheckedChangeListener((v, isChecked) -> updateAvailability(isChecked));
     }
 
-    // 🔁 Update availability toggle
+    private void loadAvailableDonations() {
+        db.collection("Donations")
+                .whereEqualTo("status", "available")
+                .addSnapshotListener((snapshot, error) -> {
+                    if (error != null) {
+                        Toast.makeText(this, "Failed to load donations", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<DonationModel> list = new ArrayList<>();
+                    if (snapshot != null) {
+                        for (DocumentSnapshot doc : snapshot.getDocuments()) {
+                            DonationModel donation = doc.toObject(DonationModel.class);
+                            if (donation != null) {
+                                donation.setDonationId(doc.getId());  // Critical!
+                                list.add(donation);
+                            }
+                        }
+                    }
+                    donationAdapter.updateData(list);
+                });
+    }
+
+    private void setupClickListeners() {
+        cardEditProfile.setOnClickListener(v -> startActivity(new Intent(this, DonorFormActivity.class)));
+        cardMyDonation.setOnClickListener(v -> startActivity(new Intent(this, DonorMyDonationActivity.class)));
+        cardViewRequests.setOnClickListener(v -> startActivity(new Intent(this, DonorRequestPortalActivity.class)));
+
+        btnLogout.setOnClickListener(v -> {
+            auth.signOut();
+            startActivity(new Intent(this, LoginActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            finish();
+        });
+    }
+
     private void updateAvailability(boolean isActive) {
         if (auth.getCurrentUser() == null) return;
 
-        String uid = auth.getCurrentUser().getUid();
-        db.collection("Donors").document(uid)
+        db.collection("Donors").document(auth.getCurrentUser().getUid())
                 .update("available", isActive)
-                .addOnSuccessListener(aVoid ->
-                        Toast.makeText(this,
-                                isActive ? "You are now available for donation" : "You are set to unavailable",
-                                Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to update status: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnSuccessListener(a -> Toast.makeText(this,
+                        isActive ? "Available for donation" : "Set to unavailable",
+                        Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show());
     }
 }

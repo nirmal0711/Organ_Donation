@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             String userId = auth.getCurrentUser().getUid();
 
             // ✅ Fixed: Correct collection name (lowercase 'users')
-            db.collection("users").document(userId).get()
+            db.collection("Users").document(userId).get()
                     .addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
                             String role = documentSnapshot.getString("role");

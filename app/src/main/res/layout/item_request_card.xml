@@ -1,0 +1,121 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="4dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="8dp"
+    android:backgroundTint="@color/white"
+    android:foreground="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 🏥 Requester Name -->
+        <TextView
+            android:id="@+id/tvHospitalName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Requester: St. Mary’s Hospital"
+            android:textColor="@color/primary_blue"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <!-- 🩺 Organ Type -->
+        <TextView
+            android:id="@+id/tvOrganType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Organ Needed: Kidney"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp" />
+
+        <!-- 💉 Blood Group -->
+        <TextView
+            android:id="@+id/tvBloodGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blood Group: O+"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="2dp" />
+
+        <!-- 📍 Location -->
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location: Kitchener, ON"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp" />
+
+        <!-- ⚡ Urgency -->
+        <TextView
+            android:id="@+id/tvUrgency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urgency: High"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- 📊 Status (Visible in both patient + hospital view) -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: Pending"
+            android:textStyle="bold"
+            android:textColor="@color/orange"
+            android:textSize="13sp"
+            android:layout_marginTop="6dp" />
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- ✅❌ Action Buttons (Hidden for patient view via adapter) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnAcceptRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accept"
+                android:backgroundTint="@color/primary_blue"
+                android:textColor="@color/white"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="8dp"
+                android:textSize="13sp"
+                android:layout_marginEnd="8dp"
+                android:elevation="4dp" />
+
+            <Button
+                android:id="@+id/btnDeclineRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Decline"
+                android:backgroundTint="@color/red"
+                android:textColor="@color/white"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="8dp"
+                android:textSize="13sp"
+                android:elevation="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

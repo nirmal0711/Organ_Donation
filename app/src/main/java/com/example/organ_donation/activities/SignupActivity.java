@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,14 +56,71 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(new Intent(SignupActivity.this, LoginActivity.class)));
     }
 
+    // -------------------------------------------------------------
+    // VALIDATION FUNCTION
+    // -------------------------------------------------------------
+    private boolean validateForm(String nameTxt, String emailTxt, String passwordTxt) {
+
+        // NAME VALIDATION
+        if (nameTxt.isEmpty()) {
+            name.setError("Name is required");
+            name.requestFocus();
+            return false;
+        }
+
+        if (nameTxt.length() < 2) {
+            name.setError("Name must be at least 2 characters");
+            name.requestFocus();
+            return false;
+        }
+
+        // No digits allowed ➝ name must only contain letters + spaces
+        if (!nameTxt.matches("^[a-zA-Z ]+$")) {
+            name.setError("Name must contain only letters (no numbers or symbols)");
+            name.requestFocus();
+            return false;
+        }
+
+        // EMAIL VALIDATION
+        if (emailTxt.isEmpty()) {
+            email.setError("Email is required");
+            email.requestFocus();
+            return false;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailTxt).matches()) {
+            email.setError("Enter a valid email");
+            email.requestFocus();
+            return false;
+        }
+
+        // PASSWORD VALIDATION
+        if (passwordTxt.isEmpty()) {
+            password.setError("Password is required");
+            password.requestFocus();
+            return false;
+        }
+
+        if (passwordTxt.length() < 6) {
+            password.setError("Password must be at least 6 characters");
+            password.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    // -------------------------------------------------------------
+    // REGISTER USER
+    // -------------------------------------------------------------
     private void registerUser() {
         String nameTxt = name.getText().toString().trim();
         String emailTxt = email.getText().toString().trim();
         String passwordTxt = password.getText().toString().trim();
-        String roleTxt = role.getSelectedItem().toString().trim().toLowerCase(); // ✅ normalized lowercase
+        String roleTxt = role.getSelectedItem().toString().trim().toLowerCase();
 
-        if (nameTxt.isEmpty() || emailTxt.isEmpty() || passwordTxt.isEmpty()) {
-            Toast.makeText(this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+        // Validate form BEFORE calling Firebase
+        if (!validateForm(nameTxt, emailTxt, passwordTxt)) {
             return;
         }
 
@@ -74,7 +132,7 @@ public class SignupActivity extends AppCompatActivity {
                     Map<String, Object> userMap = new HashMap<>();
                     userMap.put("name", nameTxt);
                     userMap.put("email", emailTxt);
-                    userMap.put("role", roleTxt); // ✅ store lowercase role
+                    userMap.put("role", roleTxt);
 
                     db.collection("Users").document(userId).set(userMap)
                             .addOnSuccessListener(unused -> {
@@ -83,14 +141,12 @@ public class SignupActivity extends AppCompatActivity {
 
                                 auth.signOut();
 
-                                // smooth guaranteed redirect
                                 new Handler(getMainLooper()).postDelayed(() -> {
                                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                     finish();
-                                    Log.d(TAG, "✅ Redirected to LoginActivity");
                                 }, 1000);
                             })
                             .addOnFailureListener(e -> {

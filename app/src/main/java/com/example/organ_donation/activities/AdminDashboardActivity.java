@@ -4,65 +4,91 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.widget.Button;
 
 import com.example.organ_donation.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AdminDashboardActivity extends AppCompatActivity {
 
-    private FirebaseAuth auth;
-
-    // Quick Action Cards
-    private LinearLayout cardManageDonors, cardManagePatients, cardManageHospitals, cardReports;
+    private LinearLayout cardManageDonors, cardManagePatients, cardManageHospitals;
+    private TextView tvTotalDonors, tvTotalPatients, tvTotalHospitals, tvTotalUsers; // <-- Added
     private Button buttonLogout;
+
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
 
-        // 🔥 Firebase init
         auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        // 🎉 Welcome Toast
-        Toast.makeText(this, "Welcome to Admin Dashboard", Toast.LENGTH_SHORT).show();
-
-        // 🔗 Initialize Views
+        // Cards
         cardManageDonors = findViewById(R.id.cardManageDonors);
         cardManagePatients = findViewById(R.id.cardManagePatients);
         cardManageHospitals = findViewById(R.id.cardManageHospitals);
-        cardReports = findViewById(R.id.cardReports);
         buttonLogout = findViewById(R.id.buttonLogout);
 
-        // 🚀 Quick Action Clicks
-        cardManageDonors.setOnClickListener(v ->
-                Toast.makeText(this, "Opening Donor Management...", Toast.LENGTH_SHORT).show()
-        );
+        // TextViews
+        tvTotalDonors = findViewById(R.id.tvTotalDonors);
+        tvTotalPatients = findViewById(R.id.tvTotalPatients);
+        tvTotalHospitals = findViewById(R.id.tvTotalHospitals);
+        tvTotalUsers = findViewById(R.id.tvTotalUsers); // <-- Added
 
-        cardManagePatients.setOnClickListener(v ->
-                Toast.makeText(this, "Opening Patient Management...", Toast.LENGTH_SHORT).show()
-        );
+        loadStats();
 
-        cardManageHospitals.setOnClickListener(v ->
-                Toast.makeText(this, "Opening Hospital Management...", Toast.LENGTH_SHORT).show()
-        );
+        // Navigation
+        cardManageDonors.setOnClickListener(v -> openList("donor"));
+        cardManagePatients.setOnClickListener(v -> openList("patient"));
+        cardManageHospitals.setOnClickListener(v -> openList("hospital"));
 
-        cardReports.setOnClickListener(v ->
-                Toast.makeText(this, "Opening Reports Section...", Toast.LENGTH_SHORT).show()
-        );
-
-        // 🚪 Logout Button
+        // Logout
         buttonLogout.setOnClickListener(v -> {
             auth.signOut();
-            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AdminDashboardActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
+    }
+
+    private void openList(String role) {
+        Intent i = new Intent(this, AdminUserListActivity.class);
+        i.putExtra("role", role);
+        startActivity(i);
+    }
+
+    private void loadStats() {
+
+        // Count Donors
+        db.collection("Users")
+                .whereEqualTo("role", "donor")
+                .addSnapshotListener((snap, e) -> {
+                    tvTotalDonors.setText(String.valueOf(snap != null ? snap.size() : 0));
+                });
+
+        // Count Patients
+        db.collection("Users")
+                .whereEqualTo("role", "patient")
+                .addSnapshotListener((snap, e) -> {
+                    tvTotalPatients.setText(String.valueOf(snap != null ? snap.size() : 0));
+                });
+
+        // Count Hospitals
+        db.collection("Users")
+                .whereEqualTo("role", "hospital")
+                .addSnapshotListener((snap, e) -> {
+                    tvTotalHospitals.setText(String.valueOf(snap != null ? snap.size() : 0));
+                });
+
+        // ⭐ Count ALL Users
+        db.collection("Users")
+                .addSnapshotListener((snap, e) -> {
+                    tvTotalUsers.setText(String.valueOf(snap != null ? snap.size() : 0));
+                });
     }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/item_request_hospital.xml -->
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/tvOrgan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Organ: Kidney"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="#D32F2F" />
+
+        <TextView
+            android:id="@+id/tvPatient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient ID: user_123"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: Pending"
+            android:textStyle="bold"
+            android:layout_marginTop="6dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="12dp">
+
+            <Button
+                android:id="@+id/btnDecline"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Decline"
+                android:textSize="12sp"
+                android:backgroundTint="#FF5252"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btnAccept"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Accept"
+                android:textSize="12sp"
+                android:backgroundTint="#4CAF50" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

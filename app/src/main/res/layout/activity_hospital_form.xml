@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/bg_gradient_screen"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 🏥 Hospital Image -->
+        <ImageView
+            android:id="@+id/imgHospitalLogo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_hospital"
+            android:background="@drawable/bg_white_circle"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/btnUploadLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Logo"
+            android:layout_gravity="center"
+            android:backgroundTint="#2196F3"
+            android:textColor="@android:color/white"
+            android:minHeight="48dp"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- 🧾 Text Fields -->
+        <EditText
+            android:id="@+id/etHospitalName"
+            android:hint="Hospital Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="6dp"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etLicenseNumber"
+            android:hint="License Number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="6dp"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etContactPerson"
+            android:hint="Contact Person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="6dp"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="6dp"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="6dp"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:hint="Address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="6dp"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:hint="Short Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="6dp"
+            android:minLines="3"
+            android:maxLines="5"
+            android:textSize="16sp" />
+
+        <!-- ✅ Switch Row -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:paddingVertical="8dp">
+
+            <TextView
+                android:text="Verified Hospital"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Switch
+                android:id="@+id/switchVerified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <!-- 💾 Submit Button -->
+        <Button
+            android:id="@+id/btnSubmit"
+            android:text="Save Profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingVertical="14dp"
+            android:minHeight="48dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#4CAF50"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>

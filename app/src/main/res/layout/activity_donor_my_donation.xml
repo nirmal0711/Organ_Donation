@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_screen"
+    tools:context=".activities.DonorMyDonationActivity">
+
+    <!-- 🔹 HEADER BAR -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingVertical="32dp"
+        android:paddingHorizontal="24dp"
+        android:background="@drawable/bg_header_glass">
+
+        <!-- 🩺 Illustration on left -->
+        <ImageView
+            android:id="@+id/imgHeader"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="18dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_header_organ"
+            android:contentDescription="Header illustration" />
+
+        <!-- 📄 Text section on right -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Donations"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:letterSpacing="0.02" />
+
+            <TextView
+                android:id="@+id/tvSubHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Track your organ donations easily"
+                android:textColor="#CCFFFFFF"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 🔹 CONTENT SCROLL AREA -->
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_below="@id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="80dp">
+
+        <!-- Empty State -->
+        <LinearLayout
+            android:id="@+id/emptyStateLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_organ_illustration"
+                android:contentDescription="Empty state image"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Donations Yet"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your organ donations will appear here."
+                android:textSize="14sp"
+                android:textColor="#B3FFFFFF"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerDonations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:paddingBottom="20dp" />
+    </LinearLayout>
+
+    <!-- 🔹 FLOATING ACTION BUTTON -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddDonation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:contentDescription="Add Donation"
+        app:srcCompat="@drawable/ic_add"
+        app:tint="@android:color/white"
+        app:backgroundTint="@color/primary_blue"
+        app:borderWidth="0dp"
+        android:elevation="8dp" />
+
+</RelativeLayout>

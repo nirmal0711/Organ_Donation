@@ -1,15 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- ======================  ORIGINAL APP THEME  ====================== -->
     <color name="purple_200">#BB86FC</color>
     <color name="purple_500">#6200EE</color>
     <color name="purple_700">#3700B3</color>
+
     <color name="primary_blue">#05AAC8</color>
     <color name="primary_dark_blue">#03629D</color>
     <color name="accent_tan">#DDB07E</color>
     <color name="accent_dark_tan">#D7A269</color>
     <color name="light_peach">#F1D8C2</color>
+
     <color name="background_offwhite">#FDFDFD</color>
     <color name="background_lightblue">#E4F6F8</color>
     <color name="input_box_dark">#F5F7F9</color>
+
     <color name="text_icon_muted">#134B63</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -18,13 +24,28 @@
     <color name="text_input_hint">#1C1C1C</color>
     <color name="text_input_hint_focused">#0375BC</color>
     <color name="primary_light_blue">#74B9FF</color>
-    <color name="primary">#05AAC8</color>
-    <color name="primary_dark">#0398BC</color>
+
     <color name="accent">#DDB07E</color>
     <color name="red">#FF0000</color>
     <color name="off_white">#FDFDFD</color>
     <color name="light_blue_background">#E4F6F8</color>
-
+    <color name="dark_gray">#555555</color>
+    <color name="gray">#A49E9E</color>
+    <color name="orange">#FB8C00</color>
+    <color name="green">#43A047</color>
     <color name="text_secondary1">#555555</color>
+
+    <!-- ======================  PORTAL COLORS (NO DUPLICATES)  ====================== -->
+    <color name="primary">#1976D2</color>           <!-- Donor -->
+    <color name="primary_dark">#1565C0</color>     <!-- Donor -->
+
+    <color name="admin_primary">#D81B60</color>     <!-- Admin -->
+    <color name="warning">#FF9800</color>           <!-- Admin -->
+
+    <color name="hospital_primary">#388E3C</color>  <!-- Hospital -->
+
+    <color name="patient_primary">#0288D1</color>   <!-- Patient -->
+
+    <color name="background">#FAFAFA</color>        <!-- Global -->
 
 </resources>

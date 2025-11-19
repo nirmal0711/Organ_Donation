@@ -27,10 +27,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.util.*;
 
 public class DonorFormActivity extends AppCompatActivity {
 
@@ -39,11 +37,11 @@ public class DonorFormActivity extends AppCompatActivity {
     private Switch switchAvailability;
     private Button btnSubmit, btnUploadImage;
     private ImageView imgProfilePreview;
-
     private GridLayout gridOrgans;
-    private List<CheckBox> organCheckBoxes = new ArrayList<>();
 
+    private final List<CheckBox> organCheckBoxes = new ArrayList<>();
     private Uri imageUri;
+
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
@@ -62,7 +60,7 @@ public class DonorFormActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-        // UI components
+        // UI setup
         etFullName = findViewById(R.id.etFullName);
         etAge = findViewById(R.id.etAge);
         etPhone = findViewById(R.id.etPhone);
@@ -77,11 +75,10 @@ public class DonorFormActivity extends AppCompatActivity {
         imgProfilePreview = findViewById(R.id.imgProfilePreview);
         gridOrgans = findViewById(R.id.gridOrgans);
 
-        // Collect CheckBoxes from GridLayout
+        // Collect all organ checkboxes
         for (int i = 0; i < gridOrgans.getChildCount(); i++) {
-            if (gridOrgans.getChildAt(i) instanceof CheckBox) {
-                organCheckBoxes.add((CheckBox) gridOrgans.getChildAt(i));
-            }
+            View view = gridOrgans.getChildAt(i);
+            if (view instanceof CheckBox) organCheckBoxes.add((CheckBox) view);
         }
 
         checkStoragePermission();
@@ -92,70 +89,40 @@ public class DonorFormActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(v -> saveProfile());
     }
 
-    // ✅ Custom spinner adapters with visible text colors
+    // -----------------------------
+    // 🔹 Spinners setup
+    // -----------------------------
     private void setupSpinners() {
-        // ---- Gender ----
-        String[] genders = {"Select Gender", "Male", "Female", "Other"};
-        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, genders) {
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView textView = (TextView) view;
-                if (position == 0) {
-                    textView.setTextColor(Color.parseColor("#777777")); // hint
-                } else {
-                    textView.setTextColor(Color.parseColor("#000000")); // black selected
-                }
-                textView.setTextSize(16);
-                return view;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView textView = (TextView) view;
-                textView.setTextColor(Color.WHITE);
-                textView.setBackgroundColor(Color.parseColor("#1C1C1C"));
-                return view;
-            }
-        };
-        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGender.setAdapter(genderAdapter);
-
-        // ---- Blood Group ----
-        String[] bloodGroups = {"Select Blood Group", "A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
-        ArrayAdapter<String> bloodAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, bloodGroups) {
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView textView = (TextView) view;
-                if (position == 0) {
-                    textView.setTextColor(Color.parseColor("#777777")); // hint
-                } else {
-                    textView.setTextColor(Color.parseColor("#000000")); // selected
-                }
-                textView.setTextSize(16);
-                return view;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView textView = (TextView) view;
-                textView.setTextColor(Color.WHITE);
-                textView.setBackgroundColor(Color.parseColor("#1C1C1C"));
-                return view;
-            }
-        };
-        bloodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerBloodGroup.setAdapter(bloodAdapter);
+        setupSpinner(spinnerGender, new String[]{"Select Gender", "Male", "Female", "Other"});
+        setupSpinner(spinnerBloodGroup, new String[]{"Select Blood Group", "A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"});
     }
 
-    // Permission
+    private void setupSpinner(Spinner spinner, String[] options) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, options) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setTextColor(position == 0 ? Color.parseColor("#777777") : Color.BLACK);
+                ((TextView) view).setTextSize(16);
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                ((TextView) view).setTextColor(Color.WHITE);
+                view.setBackgroundColor(Color.parseColor("#1C1C1C"));
+                return view;
+            }
+        };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    // -----------------------------
+    // 🔹 Permission check
+    // -----------------------------
     private void checkStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
@@ -163,16 +130,16 @@ public class DonorFormActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 1);
             }
-        } else {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-            }
+        } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
     }
 
-    // Select Image
+    // -----------------------------
+    // 🔹 Image picker
+    // -----------------------------
     private void selectImage() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -182,13 +149,15 @@ public class DonorFormActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
             Glide.with(this).load(imageUri).circleCrop().into(imgProfilePreview);
         }
     }
 
-    // Load data
+    // -----------------------------
+    // 🔹 Load existing data
+    // -----------------------------
     private void loadExistingData() {
         if (auth.getCurrentUser() == null) return;
         String uid = auth.getCurrentUser().getUid();
@@ -199,9 +168,9 @@ public class DonorFormActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to load data", Toast.LENGTH_SHORT).show());
     }
 
-    // Fill Form
     private void fillFormWithExistingData(DocumentSnapshot doc) {
         if (!doc.exists()) return;
+
         try {
             etFullName.setText(doc.getString("fullName"));
             etAge.setText(doc.getString("age"));
@@ -210,17 +179,8 @@ public class DonorFormActivity extends AppCompatActivity {
             etHealthConditions.setText(doc.getString("healthConditions"));
             etEmergencyContact.setText(doc.getString("emergencyContact"));
 
-            String gender = doc.getString("gender");
-            if (gender != null) {
-                ArrayAdapter adapter = (ArrayAdapter) spinnerGender.getAdapter();
-                spinnerGender.setSelection(adapter.getPosition(gender));
-            }
-
-            String blood = doc.getString("bloodGroup");
-            if (blood != null) {
-                ArrayAdapter adapter = (ArrayAdapter) spinnerBloodGroup.getAdapter();
-                spinnerBloodGroup.setSelection(adapter.getPosition(blood));
-            }
+            selectSpinner(spinnerGender, doc.getString("gender"));
+            selectSpinner(spinnerBloodGroup, doc.getString("bloodGroup"));
 
             Boolean available = doc.getBoolean("available");
             switchAvailability.setChecked(available != null && available);
@@ -230,19 +190,11 @@ public class DonorFormActivity extends AppCompatActivity {
                 Glide.with(this).load(imageUrl).circleCrop().into(imgProfilePreview);
             }
 
-            // ✅ Safely get organ list
-            List<String> organs = new ArrayList<>();
-            Object organsObj = doc.get("organsDonated");
-            if (organsObj instanceof List<?>) {
-                for (Object o : (List<?>) organsObj) {
-                    if (o instanceof String) organs.add(((String) o).trim().toLowerCase());
+            List<String> organs = (List<String>) doc.get("organsDonated");
+            if (organs != null) {
+                for (CheckBox cb : organCheckBoxes) {
+                    cb.setChecked(organs.contains(cb.getText().toString().trim().toLowerCase()));
                 }
-            }
-
-            // ✅ Pre-check the correct boxes
-            for (CheckBox cb : organCheckBoxes) {
-                String organText = cb.getText().toString().trim().toLowerCase();
-                cb.setChecked(organs.contains(organText));
             }
 
             btnSubmit.setText("Update Profile");
@@ -251,7 +203,15 @@ public class DonorFormActivity extends AppCompatActivity {
         }
     }
 
-    // Save Data
+    private void selectSpinner(Spinner spinner, String value) {
+        if (value == null) return;
+        ArrayAdapter adapter = (ArrayAdapter) spinner.getAdapter();
+        spinner.setSelection(adapter.getPosition(value));
+    }
+
+    // -----------------------------
+    // 🔹 Save profile
+    // -----------------------------
     private void saveProfile() {
         if (auth.getCurrentUser() == null) return;
         String uid = auth.getCurrentUser().getUid();
@@ -265,17 +225,21 @@ public class DonorFormActivity extends AppCompatActivity {
         donor.put("fullName", safeText(etFullName));
         donor.put("age", safeText(etAge));
         donor.put("gender", spinnerGender.getSelectedItem().toString());
-        donor.put("bloodGroup", spinnerBloodGroup.getSelectedItem().toString());
+        donor.put("bloodGroup", spinnerBloodGroup.getSelectedItem().toString().toUpperCase());
         donor.put("phone", safeText(etPhone));
         donor.put("address", safeText(etAddress));
         donor.put("healthConditions", safeText(etHealthConditions));
         donor.put("emergencyContact", safeText(etEmergencyContact));
         donor.put("available", switchAvailability.isChecked());
 
-        // ✅ Collect selected organs
+        // ✅ Normalize organs: lowercase + singular
         List<String> selectedOrgans = new ArrayList<>();
         for (CheckBox cb : organCheckBoxes) {
-            if (cb.isChecked()) selectedOrgans.add(cb.getText().toString().trim());
+            if (cb.isChecked()) {
+                String organ = cb.getText().toString().trim().toLowerCase();
+                if (organ.endsWith("s")) organ = organ.substring(0, organ.length() - 1);
+                selectedOrgans.add(organ);
+            }
         }
         donor.put("organsDonated", selectedOrgans);
 
@@ -300,15 +264,14 @@ public class DonorFormActivity extends AppCompatActivity {
         return et.getText() != null ? et.getText().toString().trim() : "";
     }
 
-    // Save Firestore and redirect
     private void saveDonorData(String uid, Map<String, Object> donor, ProgressDialog dialog) {
         db.collection("Donors").document(uid)
                 .set(donor)
                 .addOnSuccessListener(aVoid -> {
+                    syncDonationCollection(uid, donor);
                     dialog.dismiss();
                     Toast.makeText(this, "Profile saved successfully!", Toast.LENGTH_SHORT).show();
 
-                    // Redirect to Dashboard
                     Intent i = new Intent(this, DonorDashboardActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
@@ -318,5 +281,58 @@ public class DonorFormActivity extends AppCompatActivity {
                     dialog.dismiss();
                     Toast.makeText(this, "Error saving: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    // -----------------------------
+    // 🔹 Sync Donations collection
+    // -----------------------------
+    private void syncDonationCollection(String uid, Map<String, Object> donor) {
+        String fullName = (String) donor.getOrDefault("fullName", "Unknown");
+        String bloodGroup = (String) donor.getOrDefault("bloodGroup", "-");
+        List<String> selectedOrgans = donor.get("organsDonated") instanceof List
+                ? (List<String>) donor.get("organsDonated") : new ArrayList<>();
+
+        db.collection("Donations")
+                .whereEqualTo("donorId", uid)
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    List<String> existingOrgans = new ArrayList<>();
+
+                    for (DocumentSnapshot doc : snapshot.getDocuments()) {
+                        String organ = doc.getString("organType");
+                        if (organ != null) existingOrgans.add(organ.toLowerCase());
+                    }
+
+                    // ✅ Add or update selected organs
+                    for (String organ : selectedOrgans) {
+                        String docId = uid + "_" + organ.replace(" ", "_").toLowerCase();
+                        Map<String, Object> donation = new HashMap<>();
+                        donation.put("donorId", uid);
+                        donation.put("donorName", fullName);
+                        donation.put("organType", organ);
+                        donation.put("bloodGroup", bloodGroup);
+                        donation.put("hospitalName", "Not assigned yet");
+                        donation.put("date", DateFormat.getDateInstance().format(new Date()));
+                        donation.put("status", "Pending");
+
+                        db.collection("Donations").document(docId)
+                                .set(donation)
+                                .addOnSuccessListener(aVoid -> Log.d("DONATION_SYNC", "Added/Updated: " + organ))
+                                .addOnFailureListener(e -> Log.e("DONATION_SYNC", "Failed to save " + organ + ": " + e.getMessage()));
+                    }
+
+                    // ❌ Delete unchecked organs
+                    for (String organ : existingOrgans) {
+                        if (!selectedOrgans.contains(organ)) {
+                            String docId = uid + "_" + organ.replace(" ", "_").toLowerCase();
+                            db.collection("Donations").document(docId)
+                                    .delete()
+                                    .addOnSuccessListener(aVoid -> Log.d("DONATION_SYNC", "Deleted unchecked organ: " + organ))
+                                    .addOnFailureListener(e -> Log.e("DONATION_SYNC", "Failed to delete: " + e.getMessage()));
+                        }
+                    }
+                })
+                .addOnFailureListener(e ->
+                        Log.e("DONATION_SYNC", "Failed to load existing donations: " + e.getMessage()));
     }
 }

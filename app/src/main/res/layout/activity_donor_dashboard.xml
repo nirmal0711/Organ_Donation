@@ -250,6 +250,29 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
+
+        <!-- AVAILABLE DONATIONS TITLE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available Organs for Donation"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="12dp"
+            android:layout_gravity="start" />
+
+        <!-- RECYCLER VIEW -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAvailableDonations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:clipToPadding="false"
+            android:paddingHorizontal="4dp"
+            android:layout_marginBottom="16dp" />
+
         <!-- 🚪 LOGOUT -->
         <Button
             android:id="@+id/btnLogout"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.organ_donation">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,24 +15,51 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Organ_Donation"
         tools:targetApi="31">
+
+        <!-- Launcher -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.DonorFormActivity" />
-        <activity android:name=".activities.SignupActivity"/>
-        <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.ForgotPasswordActivity"/>
-        <activity android:name=".activities.DashboardActivity"/>
-        <activity android:name=".activities.DonorDashboardActivity" />
-        <activity android:name=".activities.PatientDashboardActivity" />
-        <activity android:name=".activities.HospitalDashboardActivity" />
-        <activity android:name=".activities.AdminDashboardActivity" />
+
+        <!-- AUTH -->
+        <activity android:name=".activities.LoginActivity" android:exported="false" />
+        <activity android:name=".activities.SignupActivity" android:exported="false" />
+        <activity android:name=".activities.ForgotPasswordActivity" android:exported="false" />
+
+        <!-- DASHBOARDS -->
+        <activity android:name=".activities.DashboardActivity" android:exported="false" />
+        <activity android:name=".activities.DonorDashboardActivity" android:exported="false" />
+        <activity android:name=".activities.PatientDashboardActivity" android:exported="false" />
+        <activity android:name=".activities.HospitalDashboardActivity" android:exported="false" />
+        <activity android:name=".activities.AdminDashboardActivity" android:exported="false" />
+
+        <!-- FORMS -->
+        <activity android:name=".activities.DonorFormActivity" android:exported="false" />
+        <activity android:name=".activities.PatientFormActivity" android:exported="false" />
+        <activity android:name=".activities.HospitalFormActivity" android:exported="false" />
+        <activity android:name=".activities.HospitalAddDonationActivity" android:exported="false" />
+
+        <!-- DONOR -->
+        <activity android:name=".activities.DonorMyDonationActivity" android:exported="false" />
+        <activity android:name=".activities.DonorRequestPortalActivity" android:exported="false" />
+
+        <!-- PATIENT -->
+        <activity android:name=".activities.PatientRequestActivity" android:exported="false" />
+        <activity android:name=".activities.MyRequestsActivity" android:exported="false" />
+        <activity android:name=".activities.AvailableDonationsActivity" android:exported="false" />
+
+        <!-- ADMIN -->
+        <activity android:name=".activities.AdminUserListActivity" android:exported="false" />
+        <activity android:name=".activities.AdminDonorListActivity" android:exported="false" />
+
+        <!-- HOSPITAL REQUEST ACTIVITY (IMPORTANT) -->
+        <activity android:name=".activities.HospitalMakeRequestActivity" android:exported="false" />
+
     </application>
 
 </manifest>

@@ -1,0 +1,53 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- 🌸 Soft circular gradient background -->
+    <path
+        android:fillColor="#FFF5F8"
+        android:pathData="M100,0A100,100 0,1,1 99.9,0z" />
+
+    <!-- 🌈 Subtle ring around -->
+    <path
+        android:fillColor="#FFFFE9EE"
+        android:pathData="M100,15A85,85 0,1,1 99.9,15z" />
+
+    <!-- 🩷 Anatomical-style heart -->
+    <path
+        android:fillColor="#FF5E6C"
+        android:pathData="M120,65c-5,-8 -20,-12 -30,-2 -10,-10 -25,-6 -30,2 -6,8 -4,28 30,55 34,-27 36,-47 30,-55z" />
+
+    <!-- ⚡ Pulse line across heart -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M60,100l15,-5 8,12 10,-20 10,15 15,-7" />
+
+    <!-- ➕ White medical cross at top -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M92,48h6v6h6v6h-6v6h-6v-6h-6v-6h6z" />
+
+    <!-- ✋ Supporting hand base -->
+    <path
+        android:fillColor="#FFD5C2"
+        android:pathData="M45,125c10,10 30,18 55,18s45,-8 55,-18c3,-3 0,-7 -5,-7H50C45,118 42,122 45,125z" />
+
+    <!-- ✨ Glows and highlights -->
+    <path
+        android:fillColor="#33FFFFFF"
+        android:pathData="M40,35a70,70 0,0,1 60,-30a70,70 0,0,0 -40,40z" />
+    <path
+        android:fillColor="#22FFFFFF"
+        android:pathData="M150,50a60,60 0,0,1 25,35a60,60 0,0,0 -25,-35z" />
+
+    <!-- 🫧 Decorative sparkles -->
+    <path
+        android:fillColor="#FFE5EC"
+        android:pathData="M150,30a5,5 0,1,1 0.1,0zM50,45a4,4 0,1,1 0.1,0zM70,160a3,3 0,1,1 0.1,0zM125,155a2.5,2.5 0,1,1 0.1,0z" />
+</vector>

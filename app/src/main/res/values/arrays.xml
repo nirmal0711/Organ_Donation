@@ -5,6 +5,18 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="organ_types">
+        <item>Select Organ</item>
+        <item>Heart</item>
+        <item>Kidney</item>
+        <item>Liver</item>
+        <item>Lungs</item>
+        <item>Pancreas</item>
+        <item>Cornea</item>
+        <item>Skin</item>
+        <item>Bone Marrow</item>
+    </string-array>
+
     <string-array name="blood_groups">
         <item>A+</item>
         <item>A-</item>
@@ -15,4 +27,7 @@
         <item>AB+</item>
         <item>AB-</item>
     </string-array>
+
+
+
 </resources>
