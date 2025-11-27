@@ -10,100 +10,125 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Make Organ Request"
-            android:textSize="24sp"
-            android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:layout_marginBottom="24dp"/>
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <!-- Form Container -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:orientation="vertical"
+            android:padding="18dp"
+            android:background="@android:color/white"
+            android:elevation="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#FFFFFF"
+            android:clipToPadding="false"
+            android:clipToOutline="false">
+
+            <!-- Organ Type -->
             <EditText
                 android:id="@+id/etOrganType"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
                 android:hint="Organ Type (e.g. Kidney, Liver)"
-                android:inputType="textCapWords"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:padding="12dp"
+                android:background="@drawable/bg_inputfield"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginBottom="14dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            <!-- Blood Group -->
             <EditText
                 android:id="@+id/etBloodGroup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
                 android:hint="Blood Group (e.g. O+, AB-)"
-                android:inputType="textCapCharacters"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:padding="12dp"
+                android:background="@drawable/bg_inputfield"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginBottom="14dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            <!-- Patient Name -->
             <EditText
                 android:id="@+id/etPatientName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Patient Full Name"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="52dp"
+                android:hint="Patient Full Name"
+                android:padding="12dp"
+                android:background="@drawable/bg_inputfield"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginBottom="14dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            <!-- Contact -->
             <EditText
                 android:id="@+id/etContact"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
                 android:hint="Contact Number"
-                android:inputType="phone"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:padding="12dp"
+                android:background="@drawable/bg_inputfield"
+                android:inputType="phone"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginBottom="14dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            <!-- Medical Reason -->
             <EditText
                 android:id="@+id/etReason"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:hint="Reason / Medical Condition"
+                android:padding="12dp"
                 android:gravity="top"
-                android:inputType="textMultiLine"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/bg_inputfield"
+                android:inputType="textMultiLine"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginBottom="14dp" />
 
-        <CheckBox
-            android:id="@+id/cbUrgent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Urgent Case (Life-Threatening)"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:layout_marginBottom="24dp"/>
+            <!-- Urgent Checkbox -->
+            <CheckBox
+                android:id="@+id/cbUrgent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Urgent Case (Life-Threatening)"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp" />
 
-        <Button
-            android:id="@+id/btnSubmitRequest"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="SUBMIT REQUEST"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:backgroundTint="#4CAF50"/>
+            <!-- Submit Button -->
+            <Button
+                android:id="@+id/btnSubmitRequest"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="SUBMIT REQUEST"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:backgroundTint="#1976D2"
+                android:textColor="@android:color/white" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"/>
+            <!-- ProgressBar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>

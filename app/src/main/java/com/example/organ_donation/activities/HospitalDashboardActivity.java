@@ -1,12 +1,13 @@
 package com.example.organ_donation.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
-
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.organ_donation.R;
@@ -25,6 +26,7 @@ public class HospitalDashboardActivity extends AppCompatActivity {
     private TextView tvHospitalName, tvHospitalLicense, tvHospitalStatus;
     private TextView tvActivePatients, tvPendingRequests, tvMatchesFound, tvUrgentCases;
     private ImageView imgHospital;
+
     private MaterialCardView btnAddDonation, btnMakeRequest, cardEditProfile, buttonLogout;
 
     private TabLayout tabLayout;
@@ -47,13 +49,12 @@ public class HospitalDashboardActivity extends AppCompatActivity {
         tvHospitalLicense = findViewById(R.id.tvHospitalLicense);
         tvHospitalStatus = findViewById(R.id.tvHospitalStatus);
 
-        imgHospital = findViewById(R.id.imgHospital);
-
-        // Stats TextViews
         tvActivePatients = findViewById(R.id.tvActivePatients);
         tvPendingRequests = findViewById(R.id.tvPendingRequests);
         tvMatchesFound = findViewById(R.id.tvMatchesFound);
         tvUrgentCases = findViewById(R.id.tvUrgentCases);
+
+        imgHospital = findViewById(R.id.imgHospital);
 
         btnAddDonation = findViewById(R.id.btnAddDonation);
         btnMakeRequest = findViewById(R.id.btnMakeRequest);
@@ -81,16 +82,10 @@ public class HospitalDashboardActivity extends AppCompatActivity {
                     if (doc != null && doc.exists()) {
 
                         tvHospitalName.setText(doc.getString("hospitalName"));
+                        tvHospitalLicense.setText("License: " + doc.getString("license"));
 
-                        tvHospitalLicense.setText(
-                                "License: " + doc.getString("license")
-                        );
-
-                        tvHospitalStatus.setText(
-                                "true".equals(doc.getString("verified"))
-                                        ? "Verified Hospital"
-                                        : "Verification Pending"
-                        );
+                        boolean isVerified = "true".equals(doc.getString("verified"));
+                        tvHospitalStatus.setText(isVerified ? "Verified Hospital" : "Verification Pending");
 
                         String imageUrl = doc.getString("imageUrl");
                         if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -100,53 +95,61 @@ public class HospitalDashboardActivity extends AppCompatActivity {
                 });
     }
 
+    // 🔥 Animate numbers (0 ➜ value)
+    private void animateTextView(TextView textView, int value, String suffix) {
+        ValueAnimator animator = ValueAnimator.ofInt(0, value);
+        animator.setDuration(800);
+        animator.addUpdateListener(animation ->
+                textView.setText(animation.getAnimatedValue().toString() + " " + suffix)
+        );
+        animator.start();
+    }
+
     private void loadStats() {
 
-        // 1️⃣ Active Patients (requests where status = active)
+        // Active Patients = Accepted
         db.collection("Requests")
-                .whereEqualTo("status", "active")
+                .whereEqualTo("status", "Accepted")
                 .addSnapshotListener((query, e) -> {
                     if (query != null)
-                        tvActivePatients.setText(query.size() + " Active Patients");
+                        animateTextView(tvActivePatients, query.size(), "Active Patients");
                 });
 
-        // 2️⃣ Pending Requests
+        // Pending Requests
         db.collection("Requests")
-                .whereEqualTo("status", "pending")
+                .whereEqualTo("status", "Pending")
                 .addSnapshotListener((query, e) -> {
                     if (query != null)
-                        tvPendingRequests.setText(query.size() + " Pending Requests");
+                        animateTextView(tvPendingRequests, query.size(), "Pending Requests");
                 });
 
-        // 3️⃣ Matches Found
+        // Matches Found = Matched
         db.collection("Requests")
-                .whereEqualTo("status", "matched")
+                .whereEqualTo("status", "Matched")
                 .addSnapshotListener((query, e) -> {
                     if (query != null)
-                        tvMatchesFound.setText(query.size() + " Matches Found");
+                        animateTextView(tvMatchesFound, query.size(), "Matches Found");
                 });
 
-        // 4️⃣ Urgent Cases
+        // Urgent Cases
         db.collection("Requests")
                 .whereEqualTo("urgency", "High")
                 .addSnapshotListener((query, e) -> {
                     if (query != null)
-                        tvUrgentCases.setText(query.size() + " Urgent Cases");
+                        animateTextView(tvUrgentCases, query.size(), "Urgent Cases");
                 });
     }
 
     private void setupActions() {
+
         btnAddDonation.setOnClickListener(v ->
-                startActivity(new Intent(this, HospitalAddDonationActivity.class))
-        );
+                startActivity(new Intent(this, HospitalAddDonationActivity.class)));
 
         btnMakeRequest.setOnClickListener(v ->
-                startActivity(new Intent(this, HospitalMakeRequestActivity.class))
-        );
+                startActivity(new Intent(this, HospitalMakeRequestActivity.class)));
 
         cardEditProfile.setOnClickListener(v ->
-                startActivity(new Intent(this, HospitalFormActivity.class))
-        );
+                startActivity(new Intent(this, HospitalFormActivity.class)));
 
         buttonLogout.setOnClickListener(v -> {
             auth.signOut();

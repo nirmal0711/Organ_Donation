@@ -33,11 +33,11 @@ public class AvailableDonationAdapter extends RecyclerView.Adapter<AvailableDona
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    public AvailableDonationAdapter(Context context) {
+    // FIXED CONSTRUCTOR — receives list
+    public AvailableDonationAdapter(Context context, ArrayList<DonationModel> list) {
         this.context = context;
-        this.list = new ArrayList<>();
+        this.list = list;
     }
-
 
     @NonNull
     @Override
@@ -53,19 +53,11 @@ public class AvailableDonationAdapter extends RecyclerView.Adapter<AvailableDona
 
         holder.organ.setText(d.getOrganType());
         holder.blood.setText(d.getBloodGroup());
-//        holder.city.setText(d.getCity());
         holder.hospital.setText(d.getHospitalName());
         holder.date.setText(d.getDate());
 
-        // Call hospital
-//        holder.btnCall.setOnClickListener(v -> {
-//            Intent intent = new Intent(Intent.ACTION_DIAL,
-//                    Uri.parse("tel:" + d.getContactNumber()));
-//            context.startActivity(intent);
-//        });
-
-        // Disable request button if donation belongs to current donor
-        if (d.getDonorId().equals(currentUserId)) {
+        // Disable request button if donation is from the same user
+        if (d.getDonorId() != null && d.getDonorId().equals(currentUserId)) {
             holder.btnRequest.setEnabled(false);
             holder.btnRequest.setText("Your Donation");
         }
@@ -75,28 +67,26 @@ public class AvailableDonationAdapter extends RecyclerView.Adapter<AvailableDona
 
     private void sendRequestToHospital(DonationModel d) {
 
-        String currentUserId = FirebaseAuth.getInstance().getUid();
+        String uid = FirebaseAuth.getInstance().getUid();
 
-        // 1️⃣ First fetch the logged-in patient’s name
         FirebaseFirestore.getInstance()
                 .collection("Patients")
-                .document(currentUserId)
+                .document(uid)
                 .get()
                 .addOnSuccessListener(doc -> {
 
                     String patientName = doc.getString("fullName");
                     if (patientName == null) patientName = "Unknown Patient";
 
-                    // 2️⃣ Now create the request with real patient name
                     String requestId = db.collection("Requests").document().getId();
 
                     Map<String, Object> reqData = new HashMap<>();
                     reqData.put("requestId", requestId);
                     reqData.put("donationId", d.getDonationId());
                     reqData.put("donorId", d.getDonorId());
-                    reqData.put("patientId", currentUserId);
-                    reqData.put("requesterName", patientName);   // 🔥 FIXED HERE
-                    reqData.put("requestedBy", currentUserId);
+                    reqData.put("patientId", uid);
+                    reqData.put("requesterName", patientName);
+                    reqData.put("requestedBy", uid);
                     reqData.put("organType", d.getOrganType());
                     reqData.put("bloodGroup", d.getBloodGroup());
                     reqData.put("location", d.getCity());
@@ -105,16 +95,12 @@ public class AvailableDonationAdapter extends RecyclerView.Adapter<AvailableDona
                     reqData.put("createdAt",
                             new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
 
-                    // 3️⃣ Save in Firestore
-                    db.collection("Requests")
-                            .document(requestId)
+                    db.collection("Requests").document(requestId)
                             .set(reqData)
-                            .addOnSuccessListener(a -> {
-                                Toast.makeText(context, "Request Sent Successfully", Toast.LENGTH_SHORT).show();
-                            })
+                            .addOnSuccessListener(a ->
+                                    Toast.makeText(context, "Request Sent Successfully", Toast.LENGTH_SHORT).show())
                             .addOnFailureListener(e ->
-                                    Toast.makeText(context, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-                            );
+                                    Toast.makeText(context, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 });
     }
 
@@ -122,6 +108,7 @@ public class AvailableDonationAdapter extends RecyclerView.Adapter<AvailableDona
     public int getItemCount() {
         return list.size();
     }
+
     public void updateData(List<DonationModel> newList) {
         list.clear();
         list.addAll(newList);
@@ -144,5 +131,4 @@ public class AvailableDonationAdapter extends RecyclerView.Adapter<AvailableDona
             btnRequest = v.findViewById(R.id.btnMakeRequest);
         }
     }
-
 }

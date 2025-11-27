@@ -3,56 +3,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:padding="16dp"
-    android:background="@android:color/white"
-    app:cardElevation="6dp"
-    app:cardCornerRadius="12dp">
+    android:layout_margin="12dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="8dp"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
         android:orientation="vertical"
+        android:padding="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Organ -->
         <TextView
             android:id="@+id/tvOrgan"
             android:text="Organ: Kidney"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="#D32F2F"
+            android:textColor="#E53935"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <!-- Blood Group -->
         <TextView
             android:id="@+id/tvBloodGroup"
             android:text="Blood Group: O+"
-            android:layout_marginTop="6dp"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:textColor="#424242"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <!-- Hospital -->
         <TextView
             android:id="@+id/tvHospitalName"
             android:text="Hospital: Apollo Hospital"
-            android:layout_marginTop="6dp"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            android:textColor="#424242"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <!-- Date -->
         <TextView
             android:id="@+id/tvDate"
-            android:text="Posted: 2025-10-30"
-            android:layout_marginTop="6dp"
+            android:text="Posted: Oct 30, 2025"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:textColor="#757575"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <!-- Action button -->
         <Button
             android:id="@+id/btnMakeRequest"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginTop="14dp"
             android:text="Request Organ"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="#4CAF50"
-            android:textColor="@android:color/white"/>
-
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#43A047"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

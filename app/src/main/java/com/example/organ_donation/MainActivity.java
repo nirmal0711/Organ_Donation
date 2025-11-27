@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkUserStatus() {
         if (auth.getCurrentUser() == null) {
             // Not logged in
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, LandingActivity.class));
             finish();
         } else {
             String userId = auth.getCurrentUser().getUid();

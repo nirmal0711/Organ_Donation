@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F5F7FB">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- Heart Logo -->
+        <!-- make sure ic_heart.png exists -->
+        <ImageView
+            android:id="@+id/landingLogo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_heart"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvLandingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Organ Donation Platform"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="#222222"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/tvLandingSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connecting Donors, Patients and Hospitals\nSaving Lives Through Innovation"
+            android:textAlignment="center"
+            android:textColor="#555555"
+            android:textSize="15sp"
+            android:layout_marginBottom="28dp" />
+
+        <!-- Features Box -->
+        <LinearLayout
+            android:layout_width="367dp"
+            android:layout_height="186dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            android:background="@android:color/white"
+            android:backgroundTint="#FFFFFF"
+            android:elevation="3dp"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Why Use This App?"
+                android:textColor="#222222"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="• Real-time Organ Availability"
+                android:textColor="#444444"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="• Easy Donor and Patient Registrations"
+                android:textColor="#444444"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="• Secure Hospital Dashboard"
+                android:textColor="#444444"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Faster Matching Between Donors and Patients"
+                android:textColor="#444444"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <!-- Continue Button -->
+        <Button
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Continue"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#1976D2"
+            android:layout_marginBottom="40dp" />
+
+    </LinearLayout>
+
+</ScrollView>

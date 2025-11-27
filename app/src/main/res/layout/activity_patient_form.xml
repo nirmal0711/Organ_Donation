@@ -91,86 +91,101 @@
                     android:id="@+id/etFullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Full Name"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_edittext_glass"
+                    android:hint="Full Name"
                     android:padding="12dp"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="10dp" />
+                    android:textColor="@color/text_primary" />
 
                 <!-- Age -->
                 <EditText
                     android:id="@+id/etAge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_edittext_glass"
                     android:hint="Age"
                     android:inputType="number"
-                    android:background="@drawable/bg_edittext_glass"
                     android:padding="12dp"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="10dp" />
+                    android:textColor="@color/text_primary" />
 
                 <!-- Gender -->
                 <Spinner
                     android:id="@+id/spinnerGender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_glass_spinner"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_glass_spinner" />
 
                 <!-- Blood Group -->
                 <Spinner
                     android:id="@+id/spinnerBloodGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_glass_spinner"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_glass_spinner" />
 
                 <!-- Phone -->
                 <EditText
                     android:id="@+id/etPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_edittext_glass"
                     android:hint="Phone Number"
                     android:inputType="phone"
-                    android:background="@drawable/bg_edittext_glass"
                     android:padding="12dp"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="10dp" />
+                    android:textColor="@color/text_primary" />
 
                 <!-- Address -->
                 <EditText
                     android:id="@+id/etAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Address"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_edittext_glass"
-                    android:padding="12dp"
-                    android:textColor="@color/text_primary"
+                    android:hint="Address"
                     android:minLines="2"
-                    android:layout_marginBottom="10dp" />
+                    android:padding="12dp"
+                    android:textColor="@color/text_primary" />
 
                 <!-- Medical History -->
                 <EditText
                     android:id="@+id/etMedicalHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Medical History (optional)"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_edittext_glass"
-                    android:padding="12dp"
-                    android:textColor="@color/text_primary"
+                    android:hint="Medical History (optional)"
                     android:minLines="3"
-                    android:layout_marginBottom="10dp" />
+                    android:padding="12dp"
+                    android:textColor="@color/text_primary" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description (About You)"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_marginBottom="24dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minLines="3"
+                        android:gravity="top"
+                        android:inputType="textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Save Button -->
                 <Button
                     android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_glass_gradient"
                     android:text="Save Profile"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/btn_glass_gradient"
-                    android:layout_marginTop="20dp" />
+                    android:textColor="@android:color/white" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

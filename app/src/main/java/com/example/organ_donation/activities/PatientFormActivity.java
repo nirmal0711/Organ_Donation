@@ -28,6 +28,7 @@ import java.util.Objects;
 public class PatientFormActivity extends AppCompatActivity {
 
     private EditText etFullName, etAge, etPhone, etAddress, etMedicalHistory;
+    private EditText editDescription;
     private Spinner spinnerGender, spinnerBloodGroup;
     private ImageView imgProfile;
     private Button btnUpload, btnSave;
@@ -60,7 +61,9 @@ public class PatientFormActivity extends AppCompatActivity {
         spinnerBloodGroup = findViewById(R.id.spinnerBloodGroup);
         imgProfile = findViewById(R.id.imgProfile);
         btnUpload = findViewById(R.id.btnUpload);
+        editDescription = findViewById(R.id.editTextDescription);
         btnSave = findViewById(R.id.btnSave);
+
 
         setupSpinners();
         checkStoragePermission();
@@ -153,6 +156,8 @@ public class PatientFormActivity extends AppCompatActivity {
         dialog.setMessage("Saving profile...");
         dialog.setCancelable(false);
         dialog.show();
+        String descriptionTxt = editDescription.getText().toString().trim();
+
 
         Map<String, Object> patient = new HashMap<>();
         patient.put("fullName", etFullName.getText().toString().trim());
@@ -162,6 +167,7 @@ public class PatientFormActivity extends AppCompatActivity {
         patient.put("phone", etPhone.getText().toString().trim());
         patient.put("address", etAddress.getText().toString().trim());
         patient.put("medicalHistory", etMedicalHistory.getText().toString().trim());
+        patient.put("description", descriptionTxt);
 
         if (imageUri != null) {
             StorageReference imgRef = storageRef.child("patient_profiles/" + uid + ".jpg");

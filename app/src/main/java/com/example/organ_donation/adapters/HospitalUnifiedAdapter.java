@@ -47,8 +47,9 @@ public class HospitalUnifiedAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         if (viewType == TYPE_REQUEST) {
             return new RequestVH(inflater.inflate(R.layout.item_request_hospital, parent, false));
+
         } else {
-            // 🔥 NEW — Use item_donation_hospital.xml
+            // LINKED WITH fragment XML properly
             return new DonationVH(inflater.inflate(R.layout.item_donation_hospital, parent, false));
         }
     }
@@ -73,12 +74,16 @@ public class HospitalUnifiedAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             DonationModel d = donations.get(position - requests.size());
             DonationVH v = (DonationVH) holder;
 
+            // ✔ Safe binding based on your XML
             v.tvOrgan.setText("Organ: " + d.getOrganType());
             v.tvBloodGroup.setText("Blood Group: " + d.getBloodGroup());
-            v.tvHospital.setText("Hospital: " + d.getHospitalName());
-            v.tvContact.setText("Contact: " + d.getContactNumber());
-            v.tvDate.setText("Date: " + d.getDate());
-            v.tvStatus.setText("Status: " + d.getStatus());
+            v.tvHospitalName.setText("Hospital: " + d.getHospitalName());
+            v.tvDate.setText("Posted: " + d.getDate());
+
+            // Optional: use button if needed
+            v.btnMakeRequest.setOnClickListener(l ->
+                    Toast.makeText(context, "Requested " + d.getOrganType(), Toast.LENGTH_SHORT).show()
+            );
         }
     }
 
@@ -113,16 +118,18 @@ public class HospitalUnifiedAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     static class DonationVH extends RecyclerView.ViewHolder {
 
-        TextView tvOrgan, tvBloodGroup, tvHospital, tvContact, tvDate, tvStatus;
+        TextView tvOrgan, tvBloodGroup, tvHospitalName, tvDate;
+        Button btnMakeRequest;
 
         DonationVH(View item) {
             super(item);
             tvOrgan = item.findViewById(R.id.tvOrgan);
             tvBloodGroup = item.findViewById(R.id.tvBloodGroup);
-            tvHospital = item.findViewById(R.id.tvHospital);
-//            tvContact = item.findViewById(R.id.tvContact);
+            tvHospitalName = item.findViewById(R.id.tvHospitalName); // FIXED
             tvDate = item.findViewById(R.id.tvDate);
-            tvStatus = item.findViewById(R.id.tvStatus);
+
+            // Button from your XML
+            btnMakeRequest = item.findViewById(R.id.btnMakeRequest);
         }
     }
 }

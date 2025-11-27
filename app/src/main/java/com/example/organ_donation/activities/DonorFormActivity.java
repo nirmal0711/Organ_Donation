@@ -33,6 +33,7 @@ import java.util.*;
 public class DonorFormActivity extends AppCompatActivity {
 
     private EditText etFullName, etAge, etPhone, etAddress, etHealthConditions, etEmergencyContact;
+    private EditText editDescription;
     private Spinner spinnerGender, spinnerBloodGroup;
     private Switch switchAvailability;
     private Button btnSubmit, btnUploadImage;
@@ -73,6 +74,8 @@ public class DonorFormActivity extends AppCompatActivity {
         btnSubmit = findViewById(R.id.btnSubmit);
         btnUploadImage = findViewById(R.id.btnUploadImage);
         imgProfilePreview = findViewById(R.id.imgProfilePreview);
+        editDescription = findViewById(R.id.editTextDescription);
+
         gridOrgans = findViewById(R.id.gridOrgans);
 
         // Collect all organ checkboxes
@@ -178,6 +181,8 @@ public class DonorFormActivity extends AppCompatActivity {
             etAddress.setText(doc.getString("address"));
             etHealthConditions.setText(doc.getString("healthConditions"));
             etEmergencyContact.setText(doc.getString("emergencyContact"));
+            editDescription.setText(doc.getString("description"));
+
 
             selectSpinner(spinnerGender, doc.getString("gender"));
             selectSpinner(spinnerBloodGroup, doc.getString("bloodGroup"));
@@ -220,6 +225,7 @@ public class DonorFormActivity extends AppCompatActivity {
         dialog.setMessage("Saving profile...");
         dialog.setCancelable(false);
         dialog.show();
+        String descriptionTxt = editDescription.getText().toString().trim();
 
         Map<String, Object> donor = new HashMap<>();
         donor.put("fullName", safeText(etFullName));
@@ -231,6 +237,7 @@ public class DonorFormActivity extends AppCompatActivity {
         donor.put("healthConditions", safeText(etHealthConditions));
         donor.put("emergencyContact", safeText(etEmergencyContact));
         donor.put("available", switchAvailability.isChecked());
+        donor.put("description", descriptionTxt);
 
         // ✅ Normalize organs: lowercase + singular
         List<String> selectedOrgans = new ArrayList<>();

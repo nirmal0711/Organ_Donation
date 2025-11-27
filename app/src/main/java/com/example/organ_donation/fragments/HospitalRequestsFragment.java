@@ -1,9 +1,11 @@
 package com.example.organ_donation.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.organ_donation.R;
+import com.example.organ_donation.activities.HospitalMakeRequestActivity;
 import com.example.organ_donation.adapters.HospitalUnifiedAdapter;
 import com.example.organ_donation.models.DonationModel;
 import com.example.organ_donation.models.RequestModel;
@@ -25,6 +28,7 @@ import java.util.List;
 public class HospitalRequestsFragment extends Fragment {
 
     private RecyclerView rvRequests;
+    private Button btnMakeRequest;
     private HospitalUnifiedAdapter adapter;
     private List<RequestModel> requestList = new ArrayList<>();
     private List<DonationModel> emptyDonations = new ArrayList<>();
@@ -36,10 +40,18 @@ public class HospitalRequestsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_hospital_requests, container, false);
 
         rvRequests = view.findViewById(R.id.rvRequests);
+        btnMakeRequest = view.findViewById(R.id.btnMakeRequest);
+
         rvRequests.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapter = new HospitalUnifiedAdapter(getContext(), requestList, emptyDonations);
         rvRequests.setAdapter(adapter);
+
+        // 🔥 Make Request button opens the form
+        btnMakeRequest.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), HospitalMakeRequestActivity.class);
+            startActivity(intent);
+        });
 
         loadRequests();
         return view;
@@ -47,7 +59,7 @@ public class HospitalRequestsFragment extends Fragment {
 
     private void loadRequests() {
         db.collection("Requests")
-                .whereEqualTo("status", "Pending")  // FIXED CASE
+                .whereEqualTo("status", "Pending")
                 .addSnapshotListener((snapshot, error) -> {
                     if (error != null) {
                         Toast.makeText(getContext(), "Error loading requests", Toast.LENGTH_SHORT).show();
@@ -61,10 +73,7 @@ public class HospitalRequestsFragment extends Fragment {
                             RequestModel req = doc.toObject(RequestModel.class);
 
                             if (req != null) {
-
-                                // CRITICAL FIX
                                 req.setRequestId(doc.getId());
-
                                 requestList.add(req);
                             }
                         }

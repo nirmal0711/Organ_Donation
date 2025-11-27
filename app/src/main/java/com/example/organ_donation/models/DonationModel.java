@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class DonationModel {
 
+    private String donorName;
     private String donationId;           // Document ID in Firestore
     private String donorId;
     private String hospitalId;
@@ -56,6 +57,9 @@ public class DonationModel {
     public String getDate() { return date; }
 
     public void setDate(String date) { this.date = date; }
+
+    public String getDonorName() { return donorName; }
+    public void setDonorName(String donorName) { this.donorName = donorName; }
 
     public FieldValue getRequestedAt() { return requestedAt; }
     public void setRequestedAt(FieldValue requestedAt) { this.requestedAt = requestedAt; }

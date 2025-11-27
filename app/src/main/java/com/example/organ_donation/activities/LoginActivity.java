@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(emailTxt).matches()) {
-            email.setError("Enter a valid email address");
+            email.setError("Enter a valid email");
             return false;
         }
         if (passwordTxt.isEmpty()) {
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
         if (passwordTxt.length() < 6) {
-            password.setError("Password must be at least 6 characters");
+            password.setError("Password must be 6+ characters");
             return false;
         }
         return true;
@@ -86,6 +86,25 @@ public class LoginActivity extends AppCompatActivity {
 
         auth.signInWithEmailAndPassword(emailTxt, passwordTxt)
                 .addOnSuccessListener(result -> {
+
+                    // 🔥 CHECK EMAIL VERIFICATION FIRST
+                    if (!auth.getCurrentUser().isEmailVerified()) {
+
+                        progressDialog.dismiss();
+                        Toast.makeText(this,
+                                "Please verify your email before logging in.",
+                                Toast.LENGTH_LONG).show();
+
+                        // 🔥 SEND VERIFICATION AGAIN
+                        auth.getCurrentUser().sendEmailVerification();
+
+                        Toast.makeText(this,
+                                "A new verification email has been sent.",
+                                Toast.LENGTH_SHORT).show();
+
+                        auth.signOut();
+                        return;
+                    }
 
                     String uid = auth.getCurrentUser().getUid();
                     Log.d(TAG, "User logged in: " + uid);
@@ -105,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                                     return;
                                 }
 
-                                // 🔥 AUTO CREATE DONOR PROFILE IF ROLE = DONOR
+                                // Auto-create donor profile if missing
                                 if (role.equalsIgnoreCase("donor")) {
                                     autoCreateDonorProfile(uid, doc.getString("name"));
                                 }
@@ -125,19 +144,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // --------------------------------------------------------------------
-    // 🔥 AUTO-CREATE DONOR DOCUMENT (THIS FIXES YOUR ADMIN DONOR LIST)
+    // AUTO-CREATE DONOR DOCUMENT
     // --------------------------------------------------------------------
     private void autoCreateDonorProfile(String uid, String name) {
 
         db.collection("Donors").document(uid).get()
                 .addOnSuccessListener(exists -> {
 
-                    if (exists.exists()) {
-                        Log.d(TAG, "Donor profile already exists");
-                        return;
-                    }
+                    if (exists.exists()) return;
 
-                    // Create default donor profile
                     Map<String, Object> donor = new HashMap<>();
                     donor.put("fullName", name != null ? name : "Donor");
                     donor.put("bloodGroup", "N/A");
@@ -151,12 +166,7 @@ public class LoginActivity extends AppCompatActivity {
                     donor.put("profileImage", "");
                     donor.put("organsDonated", new java.util.ArrayList<>());
 
-                    db.collection("Donors").document(uid)
-                            .set(donor)
-                            .addOnSuccessListener(a ->
-                                    Log.d(TAG, "Donor profile auto-created"))
-                            .addOnFailureListener(e ->
-                                    Log.e(TAG, "Failed to auto-create donor: " + e.getMessage()));
+                    db.collection("Donors").document(uid).set(donor);
                 });
     }
 
@@ -184,7 +194,6 @@ public class LoginActivity extends AppCompatActivity {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
     }
 }

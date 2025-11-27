@@ -18,7 +18,7 @@
         android:paddingBottom="32dp"
         android:gravity="center_horizontal">
 
-        <!-- 🌈 HEADER -->
+        <!-- HEADER -->
         <LinearLayout
             android:id="@+id/headerSection"
             android:layout_width="match_parent"
@@ -86,7 +86,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- 🩸 AVAILABILITY -->
+        <!-- AVAILABILITY -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,8 +129,18 @@
                     android:trackTint="#90CAF9" />
             </LinearLayout>
         </LinearLayout>
+        <TextView
+            android:id="@+id/tvDonorDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No description added."
+            android:textSize="16sp"
+            android:textColor="#444"
+            android:padding="12dp"
+            android:background="@drawable/bg_white_rounded"
+            android:layout_marginTop="12dp"/>
 
-        <!-- ⚡ QUICK ACTIONS -->
+        <!-- QUICK ACTIONS -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -139,7 +149,7 @@
             android:weightSum="3"
             android:layout_marginBottom="16dp">
 
-            <!-- 💉 My Donations -->
+            <!-- My Donations -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardMyDonation"
                 android:layout_width="0dp"
@@ -174,9 +184,10 @@
                         android:layout_marginTop="8dp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 📋 View Requests -->
+            <!-- View Requests -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewRequests"
                 android:layout_width="0dp"
@@ -211,9 +222,10 @@
                         android:layout_marginTop="8dp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- ✏️ Edit Profile -->
+            <!-- Edit Profile -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardEditProfile"
                 android:layout_width="0dp"
@@ -247,33 +259,76 @@
                         android:layout_marginTop="8dp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
+        <!--  ⭐ MOTIVATIONAL BANNER  -->
+        <com.google.android.material.card.MaterialCardView android:id="@+id/cardMotivation" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="22dp" app:cardCornerRadius="22dp" app:cardElevation="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_header_glass" android:padding="20dp" android:orientation="vertical" android:clipToOutline="true">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="“One donor can save up to 8 lives.”" android:textColor="@android:color/white" android:textSize="17sp" android:textStyle="italic"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Your kindness brings hope to families." android:textColor="#E0FFFFFF" android:textSize="14sp" android:layout_marginTop="6dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <!--  ⭐ DONOR IMPACT STATS  -->
+        <com.google.android.material.card.MaterialCardView android:id="@+id/cardImpact" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="24dp" app:cardCornerRadius="22dp" app:cardElevation="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card_blue" android:padding="20dp" android:orientation="horizontal" android:gravity="center" android:clipToOutline="true">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8" android:textColor="@android:color/white" android:textSize="22sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lives Saved" android:textColor="#E0FFFFFF" android:textSize="13sp"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="75+" android:textColor="@android:color/white" android:textSize="22sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="People Helped" android:textColor="#E0FFFFFF" android:textSize="13sp"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="∞" android:textColor="@android:color/white" android:textSize="22sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hope Impact" android:textColor="#E0FFFFFF" android:textSize="13sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <!--  ⭐ IMAGE SLIDER  -->
+        <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingStart="6dp" android:paddingEnd="6dp" android:scrollbars="none" android:layout_marginBottom="26dp">
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingStart="4dp" android:paddingEnd="4dp">
+                <!--  Card 1  -->
+                <com.google.android.material.card.MaterialCardView android:layout_width="260dp" android:layout_height="160dp" android:layout_marginEnd="16dp" app:cardCornerRadius="20dp" app:cardElevation="10dp">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" android:adjustViewBounds="true" android:src="@drawable/liver"/>
+                </com.google.android.material.card.MaterialCardView>
+                <!--  Card 2  -->
+                <com.google.android.material.card.MaterialCardView android:layout_width="260dp" android:layout_height="160dp" android:layout_marginEnd="16dp" app:cardCornerRadius="20dp" app:cardElevation="10dp">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" android:adjustViewBounds="true" android:src="@drawable/blood_donation"/>
+                </com.google.android.material.card.MaterialCardView>
+                <!--  Card 3  -->
+                <com.google.android.material.card.MaterialCardView android:layout_width="260dp" android:layout_height="160dp" android:layout_marginEnd="16dp" app:cardCornerRadius="20dp" app:cardElevation="10dp">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:adjustViewBounds="true" android:scaleType="centerCrop" android:src="@drawable/heart"/>
+                </com.google.android.material.card.MaterialCardView>
+                <!--  Card 4  -->
+                <com.google.android.material.card.MaterialCardView android:layout_width="260dp" android:layout_height="160dp" android:layout_marginEnd="10dp" app:cardCornerRadius="20dp" app:cardElevation="10dp">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" android:adjustViewBounds="true" android:src="@drawable/kidney"/>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </HorizontalScrollView>
+        <!--  ⭐ AWARENESS EXPANDABLE CARD  -->
+        <com.google.android.material.card.MaterialCardView android:id="@+id/cardAwareness" android:layout_width="match_parent" android:layout_height="wrap_content" app:cardCornerRadius="20dp" app:cardElevation="12dp" android:layout_marginBottom="20dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_card_purple" android:clipToOutline="true" android:padding="0dp">
+                <ImageView android:id="@+id/imgAwareness" android:layout_width="match_parent" android:layout_height="200dp" android:scaleType="centerCrop" android:adjustViewBounds="true" android:src="@drawable/temp_awarness"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="The Gift of Life" android:textColor="@android:color/white" android:textSize="20sp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/tvShortDesc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Your donation can save up to 8 lives..." android:textColor="#E0FFFFFF" android:textSize="15sp" android:layout_marginTop="5dp"/>
+                    <TextView android:id="@+id/tvFullDesc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Organ donation is one of the greatest gifts a human being can offer. Every year, thousands of patients wait for a second chance at life—hoping for a miracle that depends on the kindness of a stranger. By choosing to become a donor, you give more than an organ; you give a family their happiness back, a child their future, and someone a chance to breathe, smile, and live again. Awareness and compassion are the first steps toward saving lives. Your willingness to donate makes you a hero long before the act itself. Together, we can create a world where no one dies waiting for hope." android:textColor="#FFFFFF" android:textSize="15sp" android:layout_marginTop="8dp" android:visibility="gone"/>
+                    <TextView android:id="@+id/btnReadMore" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#4AF58B" android:textSize="15sp" android:textStyle="bold" android:text="Read More" android:layout_marginTop="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <!--  ⭐ INFORMATION CARD  -->
+        <com.google.android.material.card.MaterialCardView android:id="@+id/cardInfo" android:layout_width="match_parent" android:layout_height="wrap_content" app:cardCornerRadius="22dp" app:cardElevation="10dp" android:layout_marginBottom="26dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_card_green" android:padding="20dp" android:clipToOutline="true">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Important Facts" android:textColor="@android:color/white" android:textSize="20sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="• One donor can save 8 lives.\n• Tissue helps 75+ people.\n• Blood is needed every 2 seconds.\n• Heroes like you give families hope." android:textColor="@android:color/white" android:textSize="15sp" android:layout_marginTop="5dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- AVAILABLE DONATIONS TITLE -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Available Organs for Donation"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="12dp"
-            android:layout_gravity="start" />
-
-        <!-- RECYCLER VIEW -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAvailableDonations"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:clipToPadding="false"
-            android:paddingHorizontal="4dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 🚪 LOGOUT -->
+        <!-- LOGOUT BUTTON -->
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
@@ -283,8 +338,8 @@
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:background="@drawable/btn_logout_gradient"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
             android:elevation="8dp" />
+
     </LinearLayout>
 </ScrollView>

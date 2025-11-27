@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.organ_donation.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -26,10 +26,9 @@ public class SignupActivity extends AppCompatActivity {
     private Spinner role;
     private Button signupBtn;
     private TextView loginRedirect;
+
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-
-    private static final String TAG = "SignupActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,111 +51,76 @@ public class SignupActivity extends AppCompatActivity {
         role.setAdapter(adapter);
 
         signupBtn.setOnClickListener(v -> registerUser());
-        loginRedirect.setOnClickListener(v ->
-                startActivity(new Intent(SignupActivity.this, LoginActivity.class)));
+        loginRedirect.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, LoginActivity.class)));
     }
 
-    // -------------------------------------------------------------
-    // VALIDATION FUNCTION
-    // -------------------------------------------------------------
     private boolean validateForm(String nameTxt, String emailTxt, String passwordTxt) {
-
-        // NAME VALIDATION
         if (nameTxt.isEmpty()) {
             name.setError("Name is required");
-            name.requestFocus();
             return false;
         }
-
-        if (nameTxt.length() < 2) {
-            name.setError("Name must be at least 2 characters");
-            name.requestFocus();
-            return false;
-        }
-
-        // No digits allowed ➝ name must only contain letters + spaces
         if (!nameTxt.matches("^[a-zA-Z ]+$")) {
-            name.setError("Name must contain only letters (no numbers or symbols)");
-            name.requestFocus();
+            name.setError("Only letters allowed");
             return false;
         }
-
-        // EMAIL VALIDATION
-        if (emailTxt.isEmpty()) {
-            email.setError("Email is required");
-            email.requestFocus();
-            return false;
-        }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(emailTxt).matches()) {
-            email.setError("Enter a valid email");
-            email.requestFocus();
+            email.setError("Invalid email");
             return false;
         }
-
-        // PASSWORD VALIDATION
-        if (passwordTxt.isEmpty()) {
-            password.setError("Password is required");
-            password.requestFocus();
-            return false;
-        }
-
         if (passwordTxt.length() < 6) {
-            password.setError("Password must be at least 6 characters");
-            password.requestFocus();
+            password.setError("Minimum 6 characters");
             return false;
         }
-
         return true;
     }
 
-    // -------------------------------------------------------------
-    // REGISTER USER
-    // -------------------------------------------------------------
     private void registerUser() {
         String nameTxt = name.getText().toString().trim();
         String emailTxt = email.getText().toString().trim();
         String passwordTxt = password.getText().toString().trim();
-        String roleTxt = role.getSelectedItem().toString().trim().toLowerCase();
+        String roleTxt = role.getSelectedItem().toString().toLowerCase();
 
-        // Validate form BEFORE calling Firebase
-        if (!validateForm(nameTxt, emailTxt, passwordTxt)) {
-            return;
-        }
+        if (!validateForm(nameTxt, emailTxt, passwordTxt)) return;
 
         auth.createUserWithEmailAndPassword(emailTxt, passwordTxt)
                 .addOnSuccessListener(authResult -> {
-                    String userId = authResult.getUser().getUid();
-                    Log.d(TAG, "✅ User created: " + userId);
+                    FirebaseUser user = authResult.getUser();
 
-                    Map<String, Object> userMap = new HashMap<>();
-                    userMap.put("name", nameTxt);
-                    userMap.put("email", emailTxt);
-                    userMap.put("role", roleTxt);
+                    // 🔥 Send Verification Email
+                    if (user != null) {
+                        user.sendEmailVerification()
+                                .addOnSuccessListener(unused -> {
+                                    Toast.makeText(this,
+                                            "Verification email sent! Please check your inbox.",
+                                            Toast.LENGTH_LONG).show();
 
-                    db.collection("Users").document(userId).set(userMap)
-                            .addOnSuccessListener(unused -> {
-                                Log.d(TAG, "✅ User data added to Firestore");
-                                Toast.makeText(this, "Account created! Redirecting to Login...", Toast.LENGTH_SHORT).show();
+                                    // Add user data to Firestore
+                                    saveUserToFirestore(user.getUid(), nameTxt, emailTxt, roleTxt);
 
-                                auth.signOut();
+                                    // Logout until email verified
+                                    auth.signOut();
 
-                                new Handler(getMainLooper()).postDelayed(() -> {
-                                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                                    finish();
-                                }, 1000);
-                            })
-                            .addOnFailureListener(e -> {
-                                Log.e(TAG, "❌ Firestore error: " + e.getMessage());
-                                Toast.makeText(this, "Error saving data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            });
+                                    new Handler(getMainLooper()).postDelayed(() -> {
+                                        startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                                        finish();
+                                    }, 1500);
+                                })
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(this, "Failed to send verification: " + e.getMessage(),
+                                                Toast.LENGTH_SHORT).show());
+                    }
                 })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "❌ Signup failed: " + e.getMessage());
-                    Toast.makeText(this, "Signup failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Signup failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void saveUserToFirestore(String userId, String name, String email, String role) {
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("name", name);
+        userMap.put("email", email);
+        userMap.put("role", role);
+        userMap.put("emailVerified", false); // Optional flag
+
+        db.collection("Users").document(userId).set(userMap);
     }
 }

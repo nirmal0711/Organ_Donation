@@ -59,6 +59,8 @@
 
         <!-- HOSPITAL REQUEST ACTIVITY (IMPORTANT) -->
         <activity android:name=".activities.HospitalMakeRequestActivity" android:exported="false" />
+        <activity android:name=".activities.HospitalDonationPortalActivity" android:exported="false" />
+        <activity android:name=".activities.LandingActivity" android:exported="false" />
 
     </application>
 

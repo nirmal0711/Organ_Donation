@@ -22,6 +22,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
 
     // 🔹 UI
     private TextView tvPatientName, tvPatientEmail, tvPatientRole, tvBloodGroup;
+    private TextView tvPatientDesc;
     private ImageView imgPatient;
     private LinearLayout cardMakeRequest, cardMyRequests, cardAvailableDonations, cardEditProfile;
     private Button buttonLogout;
@@ -58,7 +59,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
     }
 
     // 🧩 Initialize all views
-    private void initUI() {
+    private void    initUI() {
         imgPatient = findViewById(R.id.imgPatient);
         tvPatientName = findViewById(R.id.tvPatientName);
         tvPatientEmail = findViewById(R.id.tvPatientEmail);
@@ -69,7 +70,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
         cardAvailableDonations = findViewById(R.id.cardAvailableDonations);
         cardEditProfile = findViewById(R.id.cardEditProfile);
         buttonLogout = findViewById(R.id.buttonLogout);
-
+        tvPatientDesc = findViewById(R.id.tvPatientDescription);
         // Placeholders
         tvPatientName.setText("Loading...");
         tvBloodGroup.setText("Blood Group: --");
@@ -128,6 +129,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
         String fullName = doc.getString("fullName");
         String bloodGroup = doc.getString("bloodGroup");
         String imageUrl = doc.getString("profileImage");
+        String description = doc.getString("description");
 
         tvPatientName.setText(fullName != null ? fullName : "Patient");
         tvPatientEmail.setText(auth.getCurrentUser() != null
@@ -135,7 +137,9 @@ public class PatientDashboardActivity extends AppCompatActivity {
                 : "Not Available");
         tvPatientRole.setText("Patient User");
         tvBloodGroup.setText("Blood Group: " + (bloodGroup != null ? bloodGroup : "--"));
-
+        tvPatientDesc.setText(description != null && !description.isEmpty()
+                ? description
+                : "No description added.");
         if (imageUrl != null && !imageUrl.isEmpty()) {
             Log.d(TAG, "🖼️ Loading profile image: " + imageUrl);
             Glide.with(this)
@@ -157,4 +161,5 @@ public class PatientDashboardActivity extends AppCompatActivity {
         if (auth.getCurrentUser() != null)
             loadPatientProfile(auth.getCurrentUser().getUid());
     }
+
 }

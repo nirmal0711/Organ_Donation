@@ -25,6 +25,8 @@ public class HospitalDonationsFragment extends Fragment {
 
     private RecyclerView rvDonations;
     private HospitalUnifiedAdapter adapter;
+
+    // Requests list MUST not be null, but can be empty
     private List<RequestModel> emptyRequests = new ArrayList<>();
     private List<DonationModel> donationList = new ArrayList<>();
 
@@ -37,11 +39,13 @@ public class HospitalDonationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_hospital_donations, container, false);
 
         rvDonations = view.findViewById(R.id.rvDonations);
-        rvDonations.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvDonations.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        adapter = new HospitalUnifiedAdapter(getContext(), emptyRequests, donationList);
+        // ✅ 1. Only SET adapter ONCE
+        adapter = new HospitalUnifiedAdapter(requireContext(), emptyRequests, donationList);
         rvDonations.setAdapter(adapter);
 
+        // Load donations
         loadDonations();
 
         return view;
@@ -49,8 +53,7 @@ public class HospitalDonationsFragment extends Fragment {
 
     private void loadDonations() {
         db.collection("Donations")
-                .whereEqualTo("status", "Assigned")   // or "available" if you use that
-
+                //.whereEqualTo("status", "Assigned") // ❌ REMOVE this filter for now
                 .addSnapshotListener((snapshot, error) -> {
 
                     donationList.clear();
@@ -59,13 +62,19 @@ public class HospitalDonationsFragment extends Fragment {
                         for (DocumentSnapshot doc : snapshot.getDocuments()) {
 
                             DonationModel d = doc.toObject(DonationModel.class);
+
                             if (d != null) {
-                                d.setDonationId(doc.getId());
+                                try {
+                                    d.setDonationId(doc.getId());
+                                } catch (Exception ex) {
+                                    ex.printStackTrace(); // safe crash-proofing
+                                }
                                 donationList.add(d);
                             }
                         }
                     }
 
+                    // Refresh UI
                     adapter.notifyDataSetChanged();
                 });
     }
